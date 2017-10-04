@@ -1,0 +1,84 @@
+I modified the code so compilable with linux commands (they ran theirs with eclipse I think): 1. remove at top of their code: package project2;
+2. change anywhere in their code: setbyclass(project2.nameclass) 
+to just
+nameclass
+(so delete project2.)
+
+javac -classpath /opt/hadoop-2.4.0/share/hadoop/common/*:/opt/hadoop-2.4.0/share/hadoop/yarn/lib/*:/opt/hadoop-2.4.0/share/hadoop/mapreduce/lib/*:/opt/hadoop-2.4.0/share/hadoop/mapreduce/*:./ LeMapper.java LeReducer.java NodeDriver.java NodeData.java PageRankBlock.java PageRankBlockMapper.java PageRankBlockReducer.java 
+
+rm -rf output/
+CLASSPATH=/opt/hadoop-2.4.0/share/hadoop/common/*:/opt/hadoop-2.4.0/share/hadoop/yarn/lib/*:/opt/hadoop-2.4.0/share/hadoop/mapreduce/lib/*:/opt/hadoop-2.4.0/share/hadoop/mapreduce/*:./ hadoop jar KMeans.jar NodeDriver PreprocessFinalWithDeadNodesStaticPR.txt output
+
+
+javac -classpath /opt/hadoop-2.4.0/share/hadoop/common/*:/opt/hadoop-2.4.0/share/hadoop/yarn/lib/*:/opt/hadoop-2.4.0/share/hadoop/mapreduce/lib/*:/opt/hadoop-2.4.0/share/hadoop/mapreduce/*:./ LeMapper.java LeReducer.java NodeDriver.java NodeData.java PageRankBlock.java PageRankBlockMapper.java PageRankBlockReducer.java 
+
+rm -rf output/
+CLASSPATH=/opt/hadoop-2.4.0/share/hadoop/common/*:/opt/hadoop-2.4.0/share/hadoop/yarn/lib/*:/opt/hadoop-2.4.0/share/hadoop/mapreduce/lib/*:/opt/hadoop-2.4.0/share/hadoop/mapreduce/*:./ hadoop jar KMeans.jar PageRankBlock PreprocessFinalWithDeadNodesStaticPR.txt output
+
+---------------------------------
+our input text
+simple Page Rank:
+
+javac -classpath /opt/hadoop-2.4.0/share/hadoop/common/*:/opt/hadoop-2.4.0/share/hadoop/yarn/lib/*:/opt/hadoop-2.4.0/share/hadoop/mapreduce/lib/*:/opt/hadoop-2.4.0/share/hadoop/mapreduce/*:./ LeMapper.java LeReducer.java NodeDriver.java NodeData.java PageRankBlock.java PageRankBlockMapper.java PageRankBlockReducer.java 
+
+jar cvf Simple.jar *.class
+
+rm -rf outputSimple/
+CLASSPATH=/opt/hadoop-2.4.0/share/hadoop/common/*:/opt/hadoop-2.4.0/share/hadoop/yarn/lib/*:/opt/hadoop-2.4.0/share/hadoop/mapreduce/lib/*:/opt/hadoop-2.4.0/share/hadoop/mapreduce/*:./ hadoop jar Simple.jar NodeDriver processed_edges_old.txt outputSimple
+
+Residual error for iteration 0: 2.3271
+Residual error for iteration 1: 0.3229
+Residual error for iteration 2: 0.1920
+Residual error for iteration 3: 0.0940
+Residual error for iteration 4: 0.0628
+
+
+
+by block page rank:
+
+
+javac -classpath /opt/hadoop-2.4.0/share/hadoop/common/*:/opt/hadoop-2.4.0/share/hadoop/yarn/lib/*:/opt/hadoop-2.4.0/share/hadoop/mapreduce/lib/*:/opt/hadoop-2.4.0/share/hadoop/mapreduce/*:./ LeMapper.java LeReducer.java NodeDriver.java NodeData.java PageRankBlock.java PageRankBlockMapper.java PageRankBlockReducer.java 
+
+jar cvf KMeans.jar *.class
+
+rm -rf outputBlock/
+CLASSPATH=/opt/hadoop-2.4.0/share/hadoop/common/*:/opt/hadoop-2.4.0/share/hadoop/yarn/lib/*:/opt/hadoop-2.4.0/share/hadoop/mapreduce/lib/*:/opt/hadoop-2.4.0/share/hadoop/mapreduce/*:./ hadoop jar KMeans.jar PageRankBlock processed_edges_old.txt outputBlock
+
+
+
+---------------------------------
+our input text
+simple Page Rank:
+
+javac -classpath /opt/hadoop-2.4.0/share/hadoop/common/*:/opt/hadoop-2.4.0/share/hadoop/yarn/lib/*:/opt/hadoop-2.4.0/share/hadoop/mapreduce/lib/*:/opt/hadoop-2.4.0/share/hadoop/mapreduce/*:./ PRDriver.java  PRMapper.java  PRReducer.java
+
+jar cvf Simple.jar *.class
+
+rm -rf outputSimple/
+CLASSPATH=/opt/hadoop-2.4.0/share/hadoop/common/*:/opt/hadoop-2.4.0/share/hadoop/yarn/lib/*:/opt/hadoop-2.4.0/share/hadoop/mapreduce/lib/*:/opt/hadoop-2.4.0/share/hadoop/mapreduce/*:./ hadoop jar Simple.jar PRDriver processed_edges_old.txt outputSimple
+
+ Iteration 1 Residual: 2.32711
+ Iteration 2 Residual: 0.32295
+ Iteration 3 Residual: 0.19208
+ Iteration 4 Residual: 0.09404
+ Iteration 5 Residual: 0.06283
+
+ Iteration 6 Residual: 0.03392
+
+
+
+by block page rank:
+
+
+javac -classpath /opt/hadoop-2.4.0/share/hadoop/common/*:/opt/hadoop-2.4.0/share/hadoop/yarn/lib/*:/opt/hadoop-2.4.0/share/hadoop/mapreduce/lib/*:/opt/hadoop-2.4.0/share/hadoop/mapreduce/*:./ LeMapper.java LeReducer.java NodeDriver.java NodeData.java PageRankBlock.java PageRankBlockMapper.java PageRankBlockReducer.java 
+
+jar cvf KMeans.jar *.class
+
+rm -rf outputBlock/
+CLASSPATH=/opt/hadoop-2.4.0/share/hadoop/common/*:/opt/hadoop-2.4.0/share/hadoop/yarn/lib/*:/opt/hadoop-2.4.0/share/hadoop/mapreduce/lib/*:/opt/hadoop-2.4.0/share/hadoop/mapreduce/*:./ hadoop jar KMeans.jar PageRankBlock processed_edges_old.txt outputBlock
+
+
+netID: ws392
+rejectMin: 0.2637
+rejectLimit: 0.2737
+Number of node after filter: 685031
